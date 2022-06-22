@@ -19,7 +19,7 @@ class UserController {
       }
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "Error fetching user data" });
+      res.status(500).json({ message: "Error logging in" });
     }
   }
   static async register(req, res) {
@@ -32,7 +32,20 @@ class UserController {
       res.status(500).json({ message: "Error creating user" });
     }
   }
-  static async getUser(req, res) {}
+  static async getUser(req, res) {
+    const id = req.params.id;
+    try {
+      let user = await User.findOne({ where: { id: id } });
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).json({ message: "User not found" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error getting user" });
+    }
+  }
 }
 
 module.exports = UserController;
