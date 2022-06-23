@@ -1,11 +1,18 @@
 import React from "react";
 import { Card, Header } from "semantic-ui-react";
 
+import { useNavigate } from "react-router-dom";
+
 const CardComponent = (props) => {
+  const navigate = useNavigate();
   const { jobs } = props;
   return (
     <Card.Group>
-      <Card fluid color="green">
+      <Card
+        fluid
+        color="green"
+        onClick={() => navigate(`/jobs/details/${jobs.id}`)}
+      >
         <Card.Content>
           <Header as="h4" color="green" floated="right">
             {jobs.type}

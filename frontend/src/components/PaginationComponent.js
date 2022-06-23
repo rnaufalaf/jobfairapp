@@ -23,7 +23,6 @@ const PaginationComponent = ({
                 paginate(number);
                 setActivePage(number);
               }}
-              href="!#"
               className="page-link p-3 text-black"
             >
               {number}
