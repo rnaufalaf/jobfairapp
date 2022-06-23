@@ -6,7 +6,7 @@ function App() {
   return (
     <div>
       <Header />
-      <div style={{ paddingTop: 20, paddingLeft: 15, paddingRight: 15 }}>
+      <div style={{ paddingTop: 20, paddingLeft: 30 }}>
         <SearchFilter />
       </div>
       <div style={{ paddingTop: 20, paddingLeft: 20, paddingRight: 20 }}>

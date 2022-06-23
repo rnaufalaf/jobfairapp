@@ -14,10 +14,10 @@ const SearchFilter = () => {
           <Search placeholder="Search..." size="small" />
         </Grid.Column>
         <Grid.Column>
-          <Checkbox style={{ paddingTop: 20 }} label="Fulltime" />
+          <Checkbox style={{ paddingTop: 40 }} label="Fulltime" />
         </Grid.Column>
         <Grid.Column>
-          <Button primary style={{ marginTop: 10 }}>
+          <Button primary style={{ marginTop: 30 }}>
             Search
           </Button>
         </Grid.Column>
