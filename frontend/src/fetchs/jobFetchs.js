@@ -15,4 +15,17 @@ const getJobList = async () => {
   }
 };
 
-export { getJobList };
+const getJobDetails = async (id) => {
+  try {
+    let result = await axios({
+      method: "GET",
+      url: `${url}/${id}`,
+    });
+    return result.data;
+  } catch (err) {
+    console.log(err);
+    return "error";
+  }
+};
+
+export { getJobList, getJobDetails };
