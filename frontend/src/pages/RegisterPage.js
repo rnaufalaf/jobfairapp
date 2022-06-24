@@ -1,10 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Container, Form } from "semantic-ui-react";
-
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
+import { registerUser } from "../fetchs/userFetch";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    email: null,
+    username: null,
+    password: null,
+    phone: null,
+    country: null,
+  });
+
+  const submitHandler = async () => {
+    let result = await registerUser(form);
+    if (result === "success") {
+      Swal.fire(
+        "Register Success!",
+        "You have successfully created your account",
+        "success"
+      );
+      navigate("/auth/login");
+    } else {
+      Swal.fire(
+        "Register Failed!",
+        "Make sure you have already inputted every forms above",
+        "error"
+      );
+    }
+  };
+
   return (
     <Container
       style={{
@@ -19,30 +48,60 @@ const RegisterPage = () => {
       <Form>
         <Form.Field>
           <label>Email</label>
-          <input placeholder="Email" />
+          <input
+            type="email"
+            placeholder="Email"
+            onChange={(event) =>
+              setForm({ ...form, email: event.target.value })
+            }
+          />
         </Form.Field>
         <Form.Field>
           <label>Username</label>
-          <input placeholder="Username" />
+          <input
+            type="text"
+            placeholder="Username"
+            onChange={(event) =>
+              setForm({ ...form, username: event.target.value })
+            }
+          />
         </Form.Field>
         <Form.Field>
           <label>Password</label>
-          <input placeholder="Password" />
+          <input
+            type="password"
+            placeholder="Password"
+            onChange={(event) =>
+              setForm({ ...form, password: event.target.value })
+            }
+          />
         </Form.Field>
         <Form.Field>
           <label>Phone</label>
-          <input placeholder="Phone" />
+          <input
+            type="number"
+            placeholder="Phone"
+            onChange={(event) =>
+              setForm({ ...form, phone: event.target.value })
+            }
+          />
         </Form.Field>
         <Form.Field>
           <label>Country</label>
-          <input placeholder="Country" />
+          <input
+            type="text"
+            placeholder="Country"
+            onChange={(event) =>
+              setForm({ ...form, country: event.target.value })
+            }
+          />
         </Form.Field>
         <div align="center">
           <Button
             style={{ marginTop: 10 }}
             type="submit"
             primary
-            onClick={() => navigate("/auth/login")}
+            onClick={submitHandler}
           >
             Submit
           </Button>

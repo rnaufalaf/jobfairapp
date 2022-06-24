@@ -1,10 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Container, Form } from "semantic-ui-react";
-
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
+import { loginUser } from "../fetchs/userFetch";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const submitHandler = async () => {
+    let result = await loginUser(form);
+    if (result === "success") {
+      Swal.fire(
+        "Login Success!",
+        "You have logged into your account",
+        "success"
+      );
+      navigate("/jobs/");
+    } else {
+      Swal.fire(
+        "Login Failed!",
+        "Please re-check your email and password",
+        "error"
+      );
+    }
+  };
+
   return (
     <Container
       style={{
@@ -19,18 +44,30 @@ const LoginPage = () => {
       <Form>
         <Form.Field>
           <label>Email</label>
-          <input placeholder="Email" />
+          <input
+            type="email"
+            placeholder="Email"
+            onChange={(event) =>
+              setForm({ ...form, email: event.target.value })
+            }
+          />
         </Form.Field>
         <Form.Field>
           <label>Password</label>
-          <input placeholder="Password" />
+          <input
+            type="password"
+            placeholder="Password"
+            onChange={(event) =>
+              setForm({ ...form, password: event.target.value })
+            }
+          />
         </Form.Field>
         <div align="center">
           <Button
             style={{ marginTop: 10 }}
             type="submit"
             primary
-            onClick={() => navigate("/jobs")}
+            onClick={submitHandler}
           >
             Submit
           </Button>

@@ -8,10 +8,20 @@ import SearchFilter from "../components/SearchFilter";
 
 import { getJobList } from "../fetchs/jobFetchs";
 
+import { useNavigate } from "react-router-dom";
+
 const JobListPage = () => {
   const [jobs, setJobs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage] = useState(5);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/auth");
+    }
+  });
 
   useEffect(() => {
     getJobList().then((jobs) => {
