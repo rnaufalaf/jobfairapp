@@ -3,10 +3,13 @@ import { Button, Container, Form } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-import { registerUser } from "../fetchs/userFetch";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../actions/userActions";
 
 const RegisterPage = () => {
+  const { action, status, data } = useSelector((state) => state.userReducers);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [form, setForm] = useState({
     email: null,
@@ -16,21 +19,10 @@ const RegisterPage = () => {
     country: null,
   });
 
-  const submitHandler = async () => {
-    let result = await registerUser(form);
-    if (result === "success") {
-      Swal.fire(
-        "Register Success!",
-        "You have successfully created your account",
-        "success"
-      );
+  const submitHandler = () => {
+    dispatch(registerUser(form));
+    if (status === "data") {
       navigate("/auth/login");
-    } else {
-      Swal.fire(
-        "Register Failed!",
-        "Make sure you have already inputted every forms above",
-        "error"
-      );
     }
   };
 

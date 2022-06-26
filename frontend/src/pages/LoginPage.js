@@ -1,34 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Container, Form } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 
-import { loginUser } from "../fetchs/userFetch";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../actions/userActions";
 
 const LoginPage = () => {
+  const { action, status, data } = useSelector((state) => state.userReducers);
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-  const submitHandler = async () => {
-    let result = await loginUser(form);
-    if (result === "success") {
-      Swal.fire(
-        "Login Success!",
-        "You have logged into your account",
-        "success"
-      );
-      navigate("/jobs/");
-    } else {
-      Swal.fire(
-        "Login Failed!",
-        "Please re-check your email and password",
-        "error"
-      );
-    }
+  const submitHandler = () => {
+    dispatch(login(form));
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/jobs/list");
+    }
+  }, [data]);
 
   return (
     <Container
