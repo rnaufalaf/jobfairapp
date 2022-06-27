@@ -21,7 +21,7 @@ const NavBar = () => {
   return (
     <Header as="h2" attached="top" color="blue">
       <Icon name="briefcase" />
-      <Header.Content>Github Jobs</Header.Content>
+      <Header.Content>JobCorner</Header.Content>
       <Button
         color="red"
         style={{ position: "absolute", right: 0, top: 10 }}
